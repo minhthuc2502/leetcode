@@ -20,7 +20,7 @@ Explanation: The answer is "wke", with the length of 3.
              Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
 */
 // This method don't respect the request about time of leetcode
-bool allUnique(string s, int start, int stop)
+/*bool allUnique(string s, int start, int stop)
 {
     string tmp;
     string chc;
@@ -55,6 +55,25 @@ public:
                 }
             return max;
         }
+    }
+};*/
+
+/**
+ *  This method is faster than 98.7% C++ online submisions 
+ */
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.size(), ans = 0;
+        int index[128] = {0};
+        for (int i = 0, j = 0; j < n; j++)
+        {
+            i = (index[s[j]] >= i ?  index[s[j]] : i);
+            ans = (ans >= (j - i + 1) ?  ans : j - i + 1);
+            index[s[j]] = j + 1;
+        }
+        return ans;
     }
 };
 
