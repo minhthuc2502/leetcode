@@ -8,16 +8,26 @@ public:
     virtual ~A() {
         std::cout << "Destructor of A" << std::endl;
     }
-    // A virtual operator()() {
-    //     return *this;
-    // }
+
+    virtual void getInstance(int& index) {
+        std::cout << "Get instance A" << std::endl;
+        index = 0;
+    }
+
+    const void virtual foo() const {
+        std::cout << "Foo of A" << std::endl;
+    }
 };
 
 class A1 : public A {
 public:
-        // A1 virtual operator()() override {
-        //     return *this;
-        // }
+    void getInstance(int& index) {
+        std::cout << "Get instance A1" << std::endl;
+        index = 1;
+    }
+    const void foo() const {
+        std::cout << "Foo of A1" << std::endl;
+    }
 };
 
 class B{
@@ -39,9 +49,11 @@ public:
 class B1: public B {
 public:
     void operator()(const A& a) {
+        a.foo();
         std::cout << "B1&A" << std::endl;
     } 
     void operator()(const A1& a1) {
+        a1.foo();
         std::cout << "B1&A1" << std::endl;
     } 
 };
@@ -52,6 +64,15 @@ void func(B&& b, T&& a) {
 }
 
 void func(B& b, A& a) {
+    int index;
+    a.getInstance(index);
+    if (index == 1) {
+        A1 tmp = static_cast<A1&>(a);
+        return b(tmp);
+    }
+    b(a);
+}
+void func(B1& b, A1& a) {
     b(a);
 }
 
@@ -64,14 +85,16 @@ int main() {
     // b(a1);
     // b1(a);
     // b1(a1);
+    A& a = a1;
+    B& b = b1;
 
-    B* bb = new B1();
-    A* aa = new A1();
-    (*bb)(*aa);
-    func(b1, a1);
+    // B* bb = new B1();
+    // A* aa = new A1();
+    // (*bb)(*aa);
+    func(b, a);
 
-    delete bb;
-    delete aa;
+    // delete bb;
+    // delete aa;
     return 0;
 }
 
