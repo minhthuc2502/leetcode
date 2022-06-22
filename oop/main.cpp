@@ -77,21 +77,22 @@ void func(B1& b, A1& a) {
 }
 
 int main() {
-    // B b;
+    B b;
     B1 b1;
-    // A a;
+    A a;
     A1 a1;
     // b(a);
     // b(a1);
     // b1(a);
     // b1(a1);
-    A& a = a1;
-    B& b = b1;
+    A& aref = a1;
+    B& bref = b1;
 
     // B* bb = new B1();
     // A* aa = new A1();
     // (*bb)(*aa);
-    func(b, a);
+    func(bref, aref);
+    func(b1, a);
 
     // delete bb;
     // delete aa;
