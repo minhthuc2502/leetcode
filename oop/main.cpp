@@ -25,7 +25,7 @@ public:
     B() {
         std::cout << "Constructor of B" << std::endl;
     }
-    ~B() {
+    virtual ~B() {
         std::cout << "Destructor of B" << std::endl;
     }
     void virtual operator()(const A& a) {
@@ -38,6 +38,13 @@ public:
 
 class B1: public B {
 public:
+    B1() {
+        std::cout << "Constructor B1" << std::endl;
+    }
+
+    virtual ~B1() {
+        std::cout << "Destructor B1" << std::endl;
+    }
     void operator()(const A& a) {
         std::cout << "B1&A" << std::endl;
     } 
@@ -55,23 +62,40 @@ void func(B& b, A& a) {
     b(a);
 }
 
+class AFriend {
+public:
+    AFriend() {};
+    friend class BFriend;
+private:
+    void foo() { std::cout << "foo" << std::endl; }
+};
+
+class BFriend {
+public:
+    void foo() { af.foo(); }
+private:
+    AFriend af;
+};
 int main() {
-    // B b;
-    B1 b1;
-    // A a;
-    A1 a1;
-    // b(a);
-    // b(a1);
-    // b1(a);
-    // b1(a1);
+    B b;
+    // B1 b1;
+    A a;
+    // A1 a1;
+    // // b(a);
+    // // b(a1);
+    // // b1(a);
+    // // b1(a1);
 
-    B* bb = new B1();
-    A* aa = new A1();
-    (*bb)(*aa);
-    func(b1, a1);
+    // B* bb = new B1();
+    // A* aa = new A1();
+    // (*bb)(*aa);
+    // // func(*bb, *aa);
 
-    delete bb;
-    delete aa;
+    // delete bb;
+    // delete aa;
+
+    // BFriend bf;
+    // bf.foo();
     return 0;
 }
 
