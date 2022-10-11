@@ -98,9 +98,9 @@ private:
     AFriend af;
 };
 int main() {
-    B b;
+    // B b;
     // B1 b1;
-    A a;
+    // A a;
     // A1 a1;
     // // b(a);
     // // b(a1);
@@ -108,9 +108,9 @@ int main() {
     // // b1(a1);
 
 
-    // B* bb = new B1();
-    // A* aa = new A1();
-    // (*bb)(*aa);
+    B* bb = new B1();
+    A* aa = new A1();
+    (*bb)(*aa);
     // // func(*bb, *aa);
 
     // delete bb;
